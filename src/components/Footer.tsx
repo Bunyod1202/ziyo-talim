@@ -35,7 +35,10 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
           {/* Brand Col */}
           <div className="lg:pr-8">
-            <img src="/logo.png" alt="Ziyo Ta'lim" className="h-16 mb-6 bg-slate-50 dark:bg-white/5 p-2 rounded-xl backdrop-blur-md border border-slate-100 dark:border-white/10" />
+            <div className="flex items-center gap-4 mb-8">
+              <img src="/logo.png" alt="Ziyo Ta'lim" className="h-24 bg-slate-50 dark:bg-white/5 p-3 rounded-2xl backdrop-blur-md border border-slate-100 dark:border-white/10" />
+              <span className="font-black text-4xl tracking-tight text-slate-900 dark:text-white">ZIYO TA'LIM</span>
+            </div>
             <p className="text-slate-600 dark:text-slate-400 leading-relaxed mb-6">
               Zamonaviy bilim, kuchli ustozlar va real natijalar birlashgan ta'lim markazi.
             </p>

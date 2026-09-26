@@ -78,12 +78,20 @@ export default function Header() {
 
   return (
     <>
-      <header className="fixed top-0 w-full z-50 flex justify-center transition-all duration-500 pt-3">
-        <div className="flex items-center justify-between px-3 py-1 w-[95%] md:w-[85%] lg:w-[1000px] bg-white/80 dark:bg-[#050505]/80 backdrop-blur-xl border border-slate-200 dark:border-slate-800 shadow-2xl rounded-full transition-all duration-500 mx-auto">
+      <motion.header 
+        initial={{ y: -100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ type: "spring", stiffness: 200, damping: 20 }}
+        className="fixed top-0 w-full z-50 flex justify-center transition-all duration-500 pt-4"
+      >
+        <div className={`flex items-center justify-between px-3 py-1.5 w-[95%] md:w-[85%] lg:w-[1000px] ${isScrolled ? "bg-white/60 dark:bg-zinc-950/60 backdrop-blur-2xl shadow-[0_8px_32px_rgba(0,0,0,0.08)] dark:shadow-[0_8px_32px_rgba(255,255,255,0.02)] border border-white/50 dark:border-white/10" : "bg-white/40 dark:bg-black/20 backdrop-blur-md shadow-lg border border-white/20 dark:border-white/5"} rounded-full transition-all duration-700 mx-auto relative overflow-hidden`}>
           
-          <div className="flex-1 flex justify-start"><a href="/" className="flex items-center gap-2 py-1">
-            <img src="/logo.png" alt="Ziyo Ta'lim Logo" className="h-5 w-auto rounded-full" />
-            <span className="font-black text-sm tracking-tight text-slate-900 dark:text-white hidden md:block">ZIYO TA'LIM</span>
+          <div className="flex-1 flex justify-start z-10 relative group">
+            {/* Logo Glow */}
+            <div className="absolute inset-0 bg-blue-500/20 blur-xl rounded-full group-hover:bg-blue-500/40 transition-colors duration-500 opacity-0 group-hover:opacity-100"></div>
+            <a href="/" className="flex items-center gap-2 py-1 relative">
+            <img src="/logo.png" alt="Ziyo Ta'lim Logo" className="h-10 w-auto rounded-full group-hover:rotate-12 transition-transform duration-500 shadow-md" />
+            <span className="font-black text-xl tracking-tight text-slate-900 dark:text-white hidden md:block">ZIYO TA'LIM</span>
           </a></div>
           
           {/* Desktop Nav */}
@@ -94,12 +102,12 @@ export default function Header() {
                 href={link.href}
                 onMouseEnter={() => setHoveredIndex(idx)}
                 onMouseLeave={() => setHoveredIndex(null)}
-                className="relative px-3 py-1 text-xs md:text-sm font-bold whitespace-nowrap text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white transition-colors z-10"
+                className="relative px-4 py-2 text-xs md:text-sm font-bold whitespace-nowrap text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-all duration-300 z-10 group"
               >
                 {hoveredIndex === idx && (
                   <motion.div
                     layoutId="header-hover"
-                    className="absolute inset-0 bg-slate-100 dark:bg-white/10 rounded-full -z-10"
+                    className="absolute inset-0 bg-white dark:bg-white/10 shadow-[0_2px_10px_rgba(0,0,0,0.05)] dark:shadow-[0_2px_10px_rgba(255,255,255,0.05)] rounded-full -z-10 border border-slate-200/50 dark:border-white/10"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
@@ -107,6 +115,15 @@ export default function Header() {
                   />
                 )}
                 {link.name}
+                {hoveredIndex === idx && (
+                  <motion.div
+                    layoutId="nav-dot"
+                    className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-blue-500 rounded-full blur-[1px]"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                  />
+                )}
               </a>
             ))}
           </nav>
@@ -115,9 +132,13 @@ export default function Header() {
             <ThemeToggle />
             <button 
               onClick={() => setIsModalOpen(true)}
-              className="bg-blue-600 hover:bg-blue-500 text-white px-4 py-1.5 rounded-full font-bold transition-all shadow-[0_0_15px_rgba(37,99,235,0.4)] hover:shadow-[0_0_25px_rgba(37,99,235,0.6)] hover:-translate-y-0.5 text-xs"
+              className="relative group px-5 py-2 rounded-full font-bold text-xs overflow-hidden z-10"
             >
-              Bepul konsultatsiya
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-cyan-500 group-hover:scale-105 transition-transform duration-300"></div>
+              <div className="absolute inset-[1px] bg-slate-50 dark:bg-zinc-950 rounded-full z-0 group-hover:opacity-0 transition-opacity duration-300"></div>
+              <span className="relative z-10 text-blue-600 dark:text-cyan-400 group-hover:text-white transition-colors duration-300">
+                Konsultatsiya
+              </span>
             </button>
           </div>
 
@@ -129,7 +150,7 @@ export default function Header() {
             </button>
           </div>
         </div>
-      </header>
+      </motion.header>
 
       {/* Mobile Nav Overlay */}
       <AnimatePresence>
